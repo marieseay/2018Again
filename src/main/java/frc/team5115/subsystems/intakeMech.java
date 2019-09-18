@@ -6,31 +6,33 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 
-import static frc.team5115.robot.Robot.joystick;
+import static frc.team5115.robot.Robot.joy;
 
 public class intakeMech {
     public DoubleSolenoid leftAbove;
     public DoubleSolenoid rightAbove;
     public DoubleSolenoid leftBelow;
     public DoubleSolenoid rightBelow;
+    public DoubleSolenoid arm;
 
     public Spark leftIntake;
     public Spark rightIntake;
 
     public intakeMech()
     {
-        leftBelow = new DoubleSolenoid(8, 0, 1);
-        rightBelow = new DoubleSolenoid(8, 2,3);
-        leftAbove = new DoubleSolenoid(7,6,7);
-        rightAbove = new DoubleSolenoid(7,5,4);
+        leftBelow = new DoubleSolenoid(7, 0, 1);
+        rightBelow = new DoubleSolenoid(7, 2,3);
+        leftAbove = new DoubleSolenoid(7,7,6);
+        rightAbove = new DoubleSolenoid(7,4,5);
+        arm = new DoubleSolenoid(8, 1, 0);
 
-        leftIntake = new Spark(4);
-        rightIntake = new Spark(4);
+//        leftIntake = new Spark(4);
+//        rightIntake = new Spark(4);
     }
 
     public void intakeUp()
     {
-        if(joystick.getRawButton(13)) {
+        if(joy.getRawButton(4)) {
             leftAbove.set(DoubleSolenoid.Value.kForward);
             rightAbove.set(DoubleSolenoid.Value.kForward);
         } else {
@@ -40,7 +42,7 @@ public class intakeMech {
 
     public void intakeDown()
     {
-        if(joystick.getRawButton(12)) {
+        if(joy.getRawButton(5)) {
             leftAbove.set(DoubleSolenoid.Value.kReverse);
             rightAbove.set(DoubleSolenoid.Value.kReverse);
         } else {
@@ -50,6 +52,7 @@ public class intakeMech {
 
     public void intakeStill()
     {
+        arm.set(DoubleSolenoid.Value.kOff);
         leftAbove.set(DoubleSolenoid.Value.kOff);
         rightAbove.set(DoubleSolenoid.Value.kOff);
         leftBelow.set(DoubleSolenoid.Value.kOff);
@@ -58,9 +61,12 @@ public class intakeMech {
 
     public void intakeOpen()
     {
-        if(joystick.getRawButton(15)) {
+        if(joy.getRawButton(8)) {
             leftBelow.set(DoubleSolenoid.Value.kForward);
             rightBelow.set(DoubleSolenoid.Value.kForward);
+
+            leftAbove.set(DoubleSolenoid.Value.kForward);
+            rightAbove.set(DoubleSolenoid.Value.kForward);
         } else {
             intakeStill();
         }
@@ -68,7 +74,7 @@ public class intakeMech {
 
     public void intakeClose()
     {
-        if(joystick.getRawButton(14)) {
+        if(joy.getRawButton(6)) {
             leftBelow.set(DoubleSolenoid.Value.kReverse);
             rightBelow.set(DoubleSolenoid.Value.kReverse);
         } else {
